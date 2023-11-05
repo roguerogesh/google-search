@@ -2,26 +2,27 @@ import {Component} from 'react'
 import SuggestionItem from '../SuggestionItem'
 import './index.css'
 
-const {suggestionsList} = this.props
-
 class GoogleSuggestions extends Component {
-  state = {searchInput: '', suggestionsLists: suggestionsList}
+  state = {searchInput: ''}
 
   onChangeSearchInput = event => {
     this.setState({searchInput: event.target.value})
   }
 
   moveToSearchInput = id => {
-    const {suggestionsLists} = this.state
-    const filteredSuggestion = suggestionsLists.filter(each => each.id === id)
+    const {searchInput} = this.state
+    const {suggestionsList} = this.props // access the props inside the methods or render methods
+
+    const filteredSuggestion = suggestionsList.filter(each => each.id === id)
 
     this.setState((searchInput: filteredSuggestion.suggestion))
   }
 
   render() {
-    const {searchInput, suggestionsLists} = this.state
-    const searchResult = suggestionsLists.filter(each =>
-      each.name.includes(searchInput),
+    const {searchInput} = this.state
+    const {suggestionsList} = this.props // access the props inside the methods or render methods
+    const searchResult = suggestionsList.filter(each =>
+      each.suggestion.toLowerCase().includes(searchInput.toLowerCase()),
     )
 
     return (
